@@ -127,65 +127,60 @@ def game_hash
   }
 end
 
-# Write code here
-def num_points_scored(player_name)
+def players
+  game_hash[:home][:players].concat game_hash[:away][:players]
+end
+
+## Create Players Array through *BRUTEFORCING*
+# def players
+#   players = []
+
+#   game_hash.each do |location, team_data|
+#     players << team_data[:players]
+#   end
+
+#   players.flatten
+# end
+
+def find_player player_name
+  players.find {|player| player[:player_name] == player_name}
+end
+
+def find_team team_name
+  game_hash.values.find {|team_data| team_data[:team_name] == team_name}
+end
+
+def num_points_scored player_name
   # Takes a player's name as an argument & returns # of points scored for that player
-  game_hash.each do |location, team_data|
-    team_data.each do |attribute, data|
-      if attribute == :players
-      # what is 'data' at each loop throughout .each block? when will the following line of code work and when will it break?
-        data.each do |data_item|
-          if data_item[:player_name] == player_name
-             return data_item[:points]
-          end
-        end
-      end
-    end
-  end
+  find_player(player_name)[:points]
 end
 
 
 def shoe_size(player_name)
   # Takes a player's name as an argument & returns shoe size of the correct player
-  game_hash.each do |location, team_data|
-    team_data.each do |attribute, data|
-      if attribute == :players
-        data.each do |data_item|
-          if data_item[:player_name] == player_name
-             return data_item[:shoe]
-          end
-        end
-      end
-    end
-  end
+  find_player(player_name)[:shoe]
 end
 
 
 def team_colors(team_name)
   # Takes a team name as an argument & returns team colors as an array
-  game_hash.each do |location, team_data|
-    if game_hash[location][:team_name] == team_name
-      return game_hash[location][:colors]
-    end
-  end
+  find_team(team_name)[:colors]
 end
 
 
 def team_names
   # Operates on the game hash to return an array of team names
-  team_names = []
-  
-  team_names << game_hash[:home][:team_name]
-  team_names << game_hash[:away][:team_name]
-  
-  team_names
+  [
+    game_hash[:home][:team_name],
+    game_hash[:away][:team_name]
+  ]
 end
 
 
 def player_numbers(team_name)
   # Takes an argument of a team name and returns an array of jersey numbers for the team
   jersey_numbers = []
-  
+
   game_hash.each do |location, team_data|
     if game_hash[location][:team_name] == team_name
       team_data.each do |attribute, data|
