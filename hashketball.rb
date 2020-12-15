@@ -127,6 +127,7 @@ def game_hash
   }
 end
 
+<<<<<<< HEAD
 def players
   game_hash[:home][:players].concat game_hash[:away][:players]
 end
@@ -153,6 +154,26 @@ end
 def num_points_scored player_name
   # Takes a player's name as an argument & returns # of points scored for that player
   find_player(player_name)[:points]
+=======
+# * Build a method, `shoe_size`, that takes in an argument of a player's name and
+#   returns the shoe size for that player.
+
+def num_points_scored(player_name)
+  game_hash.each do |location, team_data|
+    team_data.each do |attribute, data|
+      # if attribute == :players
+      #   data.each do |data_item|
+      #     if data_item[:player_name] == player_name
+      #       return data_item[:points]
+        if attribute{player_name] == player_name
+          return inner_key[:points]
+        end
+          # end
+        # end
+      end
+    end
+  end
+>>>>>>> 603dc64612871565381afe2409d4fd3d7f31cad8
 end
 
 
@@ -252,6 +273,7 @@ def most_points_scored
       end
     end
   end
+  
   mvp
 end
 
@@ -275,13 +297,12 @@ def winning_team
     end
   end
   
-  home_points = home_points.reduce(:+)
-  away_points = away_points.reduce(:+)
-  
-  if home_points > away_points
+  if home_points.reduce(:+) > away_points.reduce(:+)
     game_hash[:home][:team_name]
-  elsif home_points < away_points
+  elsif home_points.reduce(:+) < away_points.reduce(:+)
     game_hash[:away][:team_name]
+  else
+    'Tie'
   end
 end
 
